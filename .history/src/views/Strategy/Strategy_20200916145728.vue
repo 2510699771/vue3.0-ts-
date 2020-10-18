@@ -1,0 +1,79 @@
+<template>
+  <div class="strategyall">
+    <div class="strategy">
+      <div class="left">
+        <div></div>
+        <div class="recommendedCity">推荐城市</div>
+        <div></div>
+      </div>
+      <div class="right"></div>
+    </div>
+  </div>
+</template>
+
+<script lang='ts'>
+import api from "@/http/api";
+import {
+  defineComponent,
+  reactive,
+  toRefs,
+  SetupContext,
+  onMounted,
+} from "vue";
+interface Data {}
+export default defineComponent({
+  name: "",
+  props: {},
+  components: {},
+  setup(props, ctx: SetupContext) {
+    let data: Data = reactive<Data>({
+        citys:[{type}]
+    });
+    onMounted(() => {
+      api
+        .cities()
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err: any) => {
+          console.log(err);
+        });
+    });
+    return {
+      ...toRefs(data),
+    };
+  },
+});
+</script>
+
+<style scoped lang='scss'>
+.strategyall {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.strategy {
+  width: 65%;
+  height: 800px;
+  display: flex;
+  justify-content: space-between;
+}
+.left {
+  width: 30%;
+  border: 1px solid hotpink;
+}
+.right {
+  width: 65%;
+  border: 1px solid forestgreen;
+}
+.recommendedCity {
+  width: 100%;
+  display: flex;
+  height: 60px;
+  align-items: center;
+  border: 1px solid gold;
+  font-weight: bolder;
+  font-size: 18px;
+  border-bottom: 1px solid rgb(190, 188, 188);
+}
+</style>
